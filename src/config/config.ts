@@ -3,6 +3,7 @@ import * as path from 'path';
 import '../env';
 
 let common = {
+  mongodbUrl:'',
   loglevel: 2,
   logkeepday: 10
 }

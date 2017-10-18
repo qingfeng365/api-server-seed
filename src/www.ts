@@ -46,17 +46,17 @@ let onListening = function onListening() {
 }
 
 
-
-log.debug('process.env.NODE_ENV:%s' , process.env.NODE_ENV);
+log.debug('------- 环境配置 -------');
+log.debug('process.env.NODE_ENV:%s', process.env.NODE_ENV);
 log.debug(config);
 
 /**
  * 
  */
-import {clearLogService} from './util/clearLogService';
+import { clearLogService } from './util/clearLogService';
 
-clearLogService.clearLog(function(err){
-  if(err){
+clearLogService.clearLog(function (err) {
+  if (err) {
     console.error(err.message || err);
   }
 });
@@ -66,7 +66,32 @@ clearLogService.setWorkByTime();
 let port = normalizePort(process.env.PORT || '9100');
 app.set('port', port);
 
+
 let server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+server.on('close', () => {
+  console.log('server will close');
+});
+
+process.on('SIGINT', function () {
+  console.log('Got SIGINT.  Press Control-D/Control-C to exit.');
+});
+
+process.on('exit', (code) => {
+  console.log(`About to exit with code: ${code}`);
+});
+
+process.on('beforeExit', (code) => {
+  console.log(`beforeExit: ${code}`);
+});
+
+process.on('disconnect', () => {
+  console.log(`disconnect...`);
+});
+
+process.on('uncaughtException', (err => {
+  console.log(`uncaughtException...`);
+}));
+

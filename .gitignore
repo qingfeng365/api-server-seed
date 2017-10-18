@@ -3,3 +3,4 @@ log
 production.json
 env.json
 development.json
+resource_dev

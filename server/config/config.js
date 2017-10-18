@@ -4,6 +4,7 @@ const jsonFileTool_1 = require("../util/jsonFileTool");
 const path = require("path");
 require("../env");
 let common = {
+    mongodbUrl: '',
     loglevel: 2,
     logkeepday: 10
 };

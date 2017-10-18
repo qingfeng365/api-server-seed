@@ -39,6 +39,7 @@ let onListening = function onListening() {
     var bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
     logTool_1.log.debug('-------监听端口: ' + bind);
 };
+logTool_1.log.debug('------- 环境配置 -------');
 logTool_1.log.debug('process.env.NODE_ENV:%s', process.env.NODE_ENV);
 logTool_1.log.debug(config_1.config);
 /**
@@ -57,3 +58,21 @@ let server = http.createServer(app_1.app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+server.on('close', () => {
+    console.log('server will close');
+});
+process.on('SIGINT', function () {
+    console.log('Got SIGINT.  Press Control-D/Control-C to exit.');
+});
+process.on('exit', (code) => {
+    console.log(`About to exit with code: ${code}`);
+});
+process.on('beforeExit', (code) => {
+    console.log(`beforeExit: ${code}`);
+});
+process.on('disconnect', () => {
+    console.log(`disconnect...`);
+});
+process.on('uncaughtException', (err => {
+    console.log(`uncaughtException...`);
+}));
